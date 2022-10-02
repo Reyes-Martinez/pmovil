@@ -3,8 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:practica2/shared/preferences.dart';
 import 'package:provider/provider.dart';
-import '../provider/login_form_provider.dart';
-import '../provider/profile_provider.dart';
+import 'package:practica2/provider/poviders.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({Key? key}) : super(key: key);

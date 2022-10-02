@@ -3,6 +3,7 @@ import 'package:practica2/settings/styles_settings.dart';
 
 class ThemeProvider with ChangeNotifier {
   ThemeData? _themeData = temaDia();
+
   //double _dimenFont = 1;
 
   //getdimenFont() => this._dimenFont;
@@ -11,9 +12,9 @@ class ThemeProvider with ChangeNotifier {
   //  notifyListeners();
   //}
 
-  getthemeData() => this._themeData;
+  getthemeData() => _themeData;
   setthemeData(ThemeData theme) {
-    this._themeData = theme;
+    _themeData = theme;
     notifyListeners();
   }
 }

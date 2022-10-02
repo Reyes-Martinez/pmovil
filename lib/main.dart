@@ -16,26 +16,37 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-        providers: [
-          ChangeNotifierProvider(create: (_) => LoginFormProvider()),
-          ChangeNotifierProvider(create: (_) => TaskProvider()),
-          ChangeNotifierProvider(create: (_) => ThemeProvider()),
-          ChangeNotifierProvider(create: (_) => ProfileProvider())
-        ],
-        child: MaterialApp(
-          title: 'Flutter Demo',
-          theme: ThemeData.light(),
-          home: const SplashScreen(),
-          debugShowCheckedModeBanner: false,
-          routes: {
-            "/dashboard": (BuildContext context) => const DashboardScreen(),
-            "/login": (BuildContext context) => const LoginScreen(),
-            "/task": (BuildContext context) => const TaskScreen(),
-            "/tasklist": (BuildContext context) => const ListTaskScreen(),
-            "/theme": (BuildContext context) => const ThemeScreen(),
-            "/profile": (BuildContext context) => const ProfileScreen(),
-          },
-        ));
+    return MultiProvider(providers: [
+      ChangeNotifierProvider(create: (_) => LoginFormProvider()),
+      ChangeNotifierProvider(create: (_) => TaskProvider()),
+      ChangeNotifierProvider(create: (_) => ThemeProvider()),
+      ChangeNotifierProvider(create: (_) => ProfileProvider())
+    ], child: const _APP());
+  }
+}
+
+class _APP extends StatelessWidget {
+  const _APP({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    ThemeProvider tema = Provider.of<ThemeProvider>(context);
+    return MaterialApp(
+      title: 'Flutter Demo',
+      theme: tema.getthemeData(),
+      home: const SplashScreen(),
+      debugShowCheckedModeBanner: false,
+      routes: {
+        "/dashboard": (BuildContext context) => const DashboardScreen(),
+        "/login": (BuildContext context) => const LoginScreen(),
+        "/task": (BuildContext context) => const TaskScreen(),
+        "/tasklist": (BuildContext context) => const ListTaskScreen(),
+        "/theme": (BuildContext context) => const ThemeScreen(),
+        "/profile": (BuildContext context) => const ProfileScreen(),
+        "/onboarding": (BuildContext context) => const OnboardingScreen(),
+      },
+    );
   }
 }

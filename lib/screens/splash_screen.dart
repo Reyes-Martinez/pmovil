@@ -9,8 +9,9 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SplashScreenView(
-      navigateRoute:
-          (Preference.password.isNotEmpty && Preference.user.isNotEmpty)
+      navigateRoute: Preference.showOnboardin == true
+          ? const OnboardingScreen()
+          : (Preference.password.isNotEmpty && Preference.user.isNotEmpty)
               ? const DashboardScreen()
               : const LoginScreen(),
       duration: 3000,
