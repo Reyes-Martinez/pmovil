@@ -1,50 +1,67 @@
-class PopularModel {
-  PopularModel({
+import 'dart:convert';
+
+class Movie {
+  Movie({
+    required this.adult,
     this.backdropPath,
-    this.id,
-    this.originalLanguage,
-    this.originalTitle,
-    this.overview,
-    this.popularity,
+    required this.genreIds,
+    required this.id,
+    required this.originalLanguage,
+    required this.originalTitle,
+    required this.overview,
+    required this.popularity,
     this.posterPath,
-    this.title,
-    this.voteAverage,
-    this.voteCount,
+    this.releaseDate,
+    required this.title,
+    required this.video,
+    required this.voteAverage,
+    required this.voteCount,
   });
 
+  bool adult;
   String? backdropPath;
-  int? id;
-  String? originalLanguage;
-  String? originalTitle;
-  String? overview;
-  double? popularity;
+  List<int> genreIds;
+  int id;
+  String originalLanguage;
+  String originalTitle;
+  String overview;
+  double popularity;
   String? posterPath;
-  String? title;
-  double? voteAverage;
-  int? voteCount;
-  factory PopularModel.frommap(Map<String, dynamic> map) => PopularModel(
-        backdropPath: map["backdrop_path"],
-        id: map["id"],
-        originalLanguage: map["original_language"],
-        originalTitle: map["original_title"],
-        overview: map["overview"],
-        popularity: map["popularity"].toDouble(),
-        posterPath: map["poster_path"],
-        title: map["title"],
-        voteAverage: map["vote_average"].toDouble(),
-        voteCount: map["vote_count"],
-      );
+  String? releaseDate;
+  String title;
+  bool video;
+  double voteAverage;
+  int voteCount;
+  String? heroId;
 
-  Map<String, dynamic> tomap() => {
-        "backdrop_path": backdropPath,
-        "id": id,
-        "original_language": originalLanguage,
-        "original_title": originalTitle,
-        "overview": overview,
-        "popularity": popularity,
-        "poster_path": posterPath,
-        "title": title,
-        "vote_average": voteAverage,
-        "vote_count": voteCount,
-      };
+  get fullPosterImg {
+    return posterPath != null
+        ? 'https://image.tmdb.org/t/p/w500$posterPath'
+        : 'https://i.stack.imgur.com/GNhxO.png';
+  }
+
+  get fullBackdropImg {
+    return backdropPath != null
+        ? 'https://image.tmdb.org/t/p/w500$backdropPath'
+        : 'https://i.stack.imgur.com/GNhxO.png';
+  }
+
+  factory Movie.fromJson(String str) => Movie.fromMap(json.decode(str));
+
+  factory Movie.fromMap(Map<String, dynamic> json) => Movie(
+        adult: json["adult"],
+        backdropPath: json["backdrop_path"],
+        genreIds: List<int>.from(json["genre_ids"].map((x) => x)),
+        id: json["id"],
+        originalLanguage: json["original_language"],
+        originalTitle: json["original_title"],
+        overview: json["overview"],
+        popularity: json["popularity"].toDouble(),
+        posterPath: json["poster_path"],
+        releaseDate: json["release_date"],
+        title: json["title"],
+        video: json["video"],
+        voteAverage: json["vote_average"].toDouble(),
+        voteCount: json["vote_count"],
+      );
 }

@@ -97,6 +97,16 @@ class DashboardScreen extends StatelessWidget {
                       const Icon(Icons.chevron_right, color: Colors.white),
                 ),
                 ListTile(
+                  leading: const Icon(Icons.movie, color: Colors.white),
+                  title: const Text('Movies',
+                      style: TextStyle(color: Colors.white)),
+                  onTap: () {
+                    Navigator.pushNamed(context, '/movies');
+                  },
+                  trailing:
+                      const Icon(Icons.chevron_right, color: Colors.white),
+                ),
+                ListTile(
                   leading: const Icon(Icons.logout, color: Colors.white),
                   title: const Text('Cerrar sesion',
                       style: TextStyle(color: Colors.white)),

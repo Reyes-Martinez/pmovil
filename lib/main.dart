@@ -20,7 +20,8 @@ class MyApp extends StatelessWidget {
       ChangeNotifierProvider(create: (_) => LoginFormProvider()),
       ChangeNotifierProvider(create: (_) => TaskProvider()),
       ChangeNotifierProvider(create: (_) => ThemeProvider()),
-      ChangeNotifierProvider(create: (_) => ProfileProvider())
+      ChangeNotifierProvider(create: (_) => ProfileProvider()),
+      ChangeNotifierProvider(create: (_) => MoviesProvider()),
     ], child: const _APP());
   }
 }
@@ -34,7 +35,7 @@ class _APP extends StatelessWidget {
   Widget build(BuildContext context) {
     ThemeProvider tema = Provider.of<ThemeProvider>(context);
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Practica 2',
       theme: tema.getthemeData(),
       home: const SplashScreen(),
       debugShowCheckedModeBanner: false,
@@ -46,6 +47,8 @@ class _APP extends StatelessWidget {
         "/theme": (BuildContext context) => const ThemeScreen(),
         "/profile": (BuildContext context) => const ProfileScreen(),
         "/onboarding": (BuildContext context) => const OnboardingScreen(),
+        "/movies": (BuildContext context) => const MovieScreen(),
+        "/details": (BuildContext context) => const DetailsScreen(),
       },
     );
   }
