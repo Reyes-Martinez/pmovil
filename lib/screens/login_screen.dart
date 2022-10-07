@@ -145,7 +145,11 @@ class _LoginFrom extends StatelessWidget {
                     profile.newUser(loginForm.email);
                     await Future.delayed(const Duration(seconds: 2));
                     loginForm.isLoading = false;
-                    Navigator.pushReplacementNamed(context, '/dashboard');
+                    if (Preference.showOnboardin == true) {
+                      Navigator.pushReplacementNamed(context, '/onboarding');
+                    } else {
+                      Navigator.pushReplacementNamed(context, '/dashboard');
+                    }
                   },
             child: const Text('Ingresar'),
           ),

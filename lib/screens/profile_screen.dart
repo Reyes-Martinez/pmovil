@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:practica2/decorations/input_decorations.dart';
@@ -83,7 +82,8 @@ class _Image extends StatelessWidget {
                       profile.selectImage(pickedFile.path);
                     }
                   },
-                  icon: const Icon(Icons.camera)),
+                  icon: const Icon(Icons.camera,
+                      color: Color.fromARGB(255, 12, 51, 228))),
               IconButton(
                   onPressed: () async {
                     final XFile? pickedFile = await picker.pickImage(
@@ -93,7 +93,8 @@ class _Image extends StatelessWidget {
                       profile.selectImage(pickedFile.path);
                     }
                   },
-                  icon: const Icon(Icons.image_search)),
+                  icon: const Icon(Icons.image_search,
+                      color: Color.fromARGB(255, 12, 51, 228))),
             ],
           ),
         ),

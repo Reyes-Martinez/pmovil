@@ -113,7 +113,7 @@ class DashboardScreen extends StatelessWidget {
                   onTap: () async {
                     Preference.password = "";
                     Preference.user = "";
-                    Preference.userFull = false;
+                    Preference.showOnboardin = true;
                     profile.borrarUser();
                     Navigator.pushReplacementNamed(context, '/login');
                   },

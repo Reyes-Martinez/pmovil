@@ -33,7 +33,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               controller: controller,
               onPageChanged: (index) {
                 setState(() {
-                  isLastPage = index == 2;
+                  isLastPage = index == 3;
                 });
               },
               children: [
@@ -81,7 +81,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         ),
                         const SizedBox(height: 14),
                         Image.asset(
-                          'assets/theme.png',
+                          'assets/themes.png',
                           fit: BoxFit.cover,
                           width: 150,
                         ),
@@ -91,27 +91,42 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           children: [
                             TextButton.icon(
                               onPressed: () {
-                                print('dia');
                                 tema.setthemeData(temaDia());
                               },
-                              icon: Icon(Icons.brightness_1),
-                              label: Text('Tema de Día'),
+                              icon: const Icon(Icons.sunny, color: Colors.grey),
+                              label: const Text('Tema de Día',
+                                  style: TextStyle(color: Colors.grey)),
                             ),
                             TextButton.icon(
                               onPressed: () {
-                                print('noche');
                                 tema.setthemeData(temaNoche());
                               },
-                              icon: Icon(Icons.dark_mode),
-                              label: Text('Tema de Noche'),
+                              icon: const Icon(Icons.mode_night_outlined,
+                                  color: Colors.black),
+                              label: const Text('Tema de Noche',
+                                  style: TextStyle(color: Colors.black)),
                             ),
                             TextButton.icon(
                               onPressed: () {
-                                print('calido');
-                                tema.setthemeData(temaCalido());
+                                tema.setthemeData(temaAzul());
                               },
-                              icon: Icon(Icons.hot_tub_sharp),
-                              label: Text('Tema de Día'),
+                              icon: const Icon(Icons.water, color: Colors.blue),
+                              label: Text('Tema Azul',
+                                  style:
+                                      TextStyle(color: Colors.blue.shade400)),
+                            ),
+                            TextButton.icon(
+                              onPressed: () {
+                                tema.setthemeData(temaVerde());
+                              },
+                              icon: const Icon(
+                                Icons.wb_twilight_sharp,
+                                color: Colors.green,
+                              ),
+                              label: Text(
+                                'Tema Verde',
+                                style: TextStyle(color: Colors.green.shade400),
+                              ),
                             ),
                           ],
                         ),
@@ -149,13 +164,32 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         const SizedBox(height: 40),
                       ],
                     )),
+                Container(
+                    color: Theme.of(context).cardColor,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text(
+                          'Movies',
+                          style: TextStyle(
+                              fontSize: 30, fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(height: 14),
+                        Image.asset(
+                          'assets/img2.png',
+                          fit: BoxFit.cover,
+                          width: 240,
+                        ),
+                        const SizedBox(height: 40),
+                      ],
+                    )),
               ]),
         ),
         bottomSheet: isLastPage
             ? TextButton(
                 onPressed: () {
                   Preference.showOnboardin = false;
-                  Navigator.pushNamed(context, '/login');
+                  Navigator.pushNamed(context, '/dashboard');
                 },
                 style: TextButton.styleFrom(
                   primary: Colors.white,
@@ -185,7 +219,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     Center(
                       child: SmoothPageIndicator(
                         controller: controller,
-                        count: 3,
+                        count: 4,
                         effect: const WormEffect(
                             spacing: 16,
                             dotColor: Colors.black26,

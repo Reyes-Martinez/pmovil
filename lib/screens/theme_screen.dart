@@ -20,27 +20,40 @@ class ThemeScreen extends StatelessWidget {
           children: [
             TextButton.icon(
               onPressed: () {
-                print('dia');
                 tema.setthemeData(temaDia());
               },
-              icon: Icon(Icons.brightness_1),
-              label: Text('Tema de Día'),
+              icon: const Icon(Icons.sunny, color: Colors.grey),
+              label: const Text('Tema de Día',
+                  style: TextStyle(color: Colors.grey)),
             ),
             TextButton.icon(
               onPressed: () {
-                print('noche');
                 tema.setthemeData(temaNoche());
               },
-              icon: Icon(Icons.dark_mode),
-              label: Text('Tema de Noche'),
+              icon: const Icon(Icons.mode_night_outlined, color: Colors.black),
+              label: const Text('Tema de Noche',
+                  style: TextStyle(color: Colors.black)),
             ),
             TextButton.icon(
               onPressed: () {
-                print('calido');
-                tema.setthemeData(temaCalido());
+                tema.setthemeData(temaAzul());
               },
-              icon: Icon(Icons.hot_tub_sharp),
-              label: Text('Tema de Día'),
+              icon: const Icon(Icons.water, color: Colors.blue),
+              label: Text('Tema Azul',
+                  style: TextStyle(color: Colors.blue.shade400)),
+            ),
+            TextButton.icon(
+              onPressed: () {
+                tema.setthemeData(temaVerde());
+              },
+              icon: const Icon(
+                Icons.wb_twilight_sharp,
+                color: Colors.green,
+              ),
+              label: Text(
+                'Tema Verde',
+                style: TextStyle(color: Colors.green.shade400),
+              ),
             ),
           ],
         ),
