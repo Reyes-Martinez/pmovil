@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:practica2/provider/poviders.dart';
+import 'package:practica2/provider/ui_provider.dart';
+import 'package:practica2/screens/favorite_movie_screen.dart';
 import 'package:practica2/screens/screens.dart';
 import 'package:practica2/shared/preferences.dart';
 import 'package:provider/provider.dart';
@@ -22,6 +24,7 @@ class MyApp extends StatelessWidget {
       ChangeNotifierProvider(create: (_) => ThemeProvider()),
       ChangeNotifierProvider(create: (_) => ProfileProvider()),
       ChangeNotifierProvider(create: (_) => MoviesProvider()),
+      ChangeNotifierProvider(create: (_) => UiProvider()),
     ], child: const _APP());
   }
 }
@@ -47,8 +50,11 @@ class _APP extends StatelessWidget {
         "/theme": (BuildContext context) => const ThemeScreen(),
         "/profile": (BuildContext context) => const ProfileScreen(),
         "/onboarding": (BuildContext context) => const OnboardingScreen(),
-        "/movies": (BuildContext context) => const MovieScreen(),
+        "/movies": (BuildContext context) => const MovieHomeScreen(),
         "/details": (BuildContext context) => const DetailsScreen(),
+        "/popularMovies": (BuildContext context) => const MovieScreen(),
+        "/favoriteMovies": (BuildContext context) =>
+            const FavoriteMovieScreen(),
       },
     );
   }

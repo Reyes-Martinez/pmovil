@@ -16,9 +16,11 @@ class Movie {
     required this.video,
     required this.voteAverage,
     required this.voteCount,
+    this.isFavorite = false,
   });
 
   bool adult;
+  bool isFavorite;
   String? backdropPath;
   List<int> genreIds;
   int id;

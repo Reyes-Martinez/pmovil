@@ -1,3 +1,4 @@
+export 'package:practica2/widgets/video_card.dart';
 export 'package:practica2/widgets/movie_slider.dart';
 export 'package:practica2/widgets/casting_cards.dart';
 export 'package:practica2/widgets/card_swiper.dart';

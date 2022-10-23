@@ -213,7 +213,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         style: TextStyle(color: Colors.white),
                       ),
                       onPressed: () {
-                        controller.jumpToPage(2);
+                        controller.jumpToPage(3);
                       },
                     ),
                     Center(

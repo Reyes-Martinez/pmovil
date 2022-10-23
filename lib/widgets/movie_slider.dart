@@ -36,16 +36,21 @@ class _MovieSliderState extends State<MovieSlider> {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 260,
+      height: 400,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (widget.title != null)
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 20),
-              child: Text(
-                widget.title!,
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              child: Center(
+                child: Text(
+                  widget.title!,
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
             ),
           const SizedBox(
@@ -77,8 +82,8 @@ class _MoviePoster extends StatelessWidget {
   Widget build(BuildContext context) {
     movie.heroId = "slider-${movie.id}";
     return Container(
-      width: 130,
-      height: 190,
+      width: 230,
+      height: 370,
       margin: const EdgeInsets.symmetric(horizontal: 10),
       child: Column(
         children: [
@@ -87,27 +92,37 @@ class _MoviePoster extends StatelessWidget {
                 Navigator.pushNamed(context, "/details", arguments: movie),
             child: Hero(
               tag: movie.heroId!,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: FadeInImage(
-                  placeholder: const AssetImage('assets/no-image.jpg'),
-                  image: NetworkImage(movie.fullPosterImg),
-                  width: 130,
-                  height: 190,
-                  fit: BoxFit.cover,
-                ),
+              child: Stack(
+                alignment: Alignment.bottomCenter,
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: FadeInImage(
+                      placeholder: const AssetImage('assets/no-image.jpg'),
+                      image: NetworkImage(movie.fullPosterImg),
+                      width: 230,
+                      height: 370,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 60,
+                    child: Material(
+                      color: Colors.black.withOpacity(.5),
+                      child: ListTile(
+                        onTap: () => Navigator.pushNamed(context, '/details',
+                            arguments: movie),
+                        title: Text(movie.title,
+                            style: const TextStyle(color: Colors.white)),
+                        trailing: const Icon(Icons.chevron_right,
+                            color: Colors.white, size: 30),
+                      ),
+                    ),
+                  )
+                ],
               ),
             ),
           ),
-          const SizedBox(
-            height: 5,
-          ),
-          Text(
-            movie.title,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-            textAlign: TextAlign.center,
-          )
         ],
       ),
     );

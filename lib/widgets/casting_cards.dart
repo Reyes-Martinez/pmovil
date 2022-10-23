@@ -3,13 +3,14 @@ import 'package:practica2/models/models.dart';
 import 'package:practica2/provider/poviders.dart';
 import 'package:provider/provider.dart';
 
-class CastingCrad extends StatelessWidget {
+class CastingCard extends StatelessWidget {
   final int moveId;
-  const CastingCrad({Key? key, required this.moveId}) : super(key: key);
+  const CastingCard({Key? key, required this.moveId}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final moviesProvider = Provider.of<MoviesProvider>(context, listen: false);
+
     return FutureBuilder(
       future: moviesProvider.getMovieCast(moveId),
       builder: (_, AsyncSnapshot<List<Cast>> snapshot) {
@@ -51,11 +52,11 @@ class _CastCard extends StatelessWidget {
       child: Column(
         children: [
           ClipRRect(
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: BorderRadius.circular(100),
               child: FadeInImage(
                 placeholder: const AssetImage("assets/no-image.jpg"),
                 image: NetworkImage(actor.fullProfilePath),
-                height: 140,
+                height: 100,
                 width: 100,
                 fit: BoxFit.cover,
               )),

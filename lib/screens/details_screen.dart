@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_stars/flutter_rating_stars.dart';
 import 'package:practica2/models/models.dart';
 import 'package:practica2/widgets/widgets.dart';
+import 'package:provider/provider.dart';
+
+import '../provider/movies_provider.dart';
 
 class DetailsScreen extends StatelessWidget {
   const DetailsScreen({Key? key}) : super(key: key);
@@ -8,13 +12,11 @@ class DetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Movie movie = ModalRoute.of(context)!.settings.arguments as Movie;
-    print(movie.backdropPath);
     return Scaffold(
       body: CustomScrollView(
         slivers: [
           _CustomAppBar(
-            image: movie.fullBackdropImg,
-            title: movie.title,
+            id: movie.id,
           ),
           SliverList(
               delegate: SliverChildListDelegate([
@@ -24,12 +26,17 @@ class DetailsScreen extends StatelessWidget {
               votes: movie.voteCount,
               originalTitle: movie.originalTitle,
               movieHeroId: movie.heroId!,
+              id: movie.id,
+              isFavorite: movie.isFavorite,
+            ),
+            const SizedBox(
+              height: 20,
             ),
             _Overview(
               overview: movie.overview,
             ),
-            CastingCrad(moveId: movie.id)
-          ]))
+            CastingCard(moveId: movie.id),
+          ])),
         ],
       ),
     );
@@ -37,36 +44,19 @@ class DetailsScreen extends StatelessWidget {
 }
 
 class _CustomAppBar extends StatelessWidget {
-  final String title;
-  final String image;
-  const _CustomAppBar({Key? key, required this.title, required this.image})
-      : super(key: key);
+  final int id;
+  const _CustomAppBar({Key? key, required this.id}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
-      backgroundColor: Theme.of(context).primaryColor,
+      backgroundColor: Colors.transparent,
       expandedHeight: 200,
       floating: false,
       pinned: true,
       flexibleSpace: FlexibleSpaceBar(
         centerTitle: true,
-        titlePadding: const EdgeInsets.all(0),
-        title: Container(
-            width: double.infinity,
-            padding: const EdgeInsets.only(bottom: 10, left: 20, right: 20),
-            alignment: Alignment.bottomCenter,
-            color: Colors.black12,
-            child: Text(
-              title,
-              style: const TextStyle(fontSize: 16),
-              textAlign: TextAlign.center,
-            )),
-        background: FadeInImage(
-          placeholder: const AssetImage("assets/loading.gif"),
-          image: NetworkImage(image),
-          fit: BoxFit.cover,
-        ),
+        background: VideoCard(movieId: id),
       ),
     );
   }
@@ -78,71 +68,116 @@ class _PosterAndTitle extends StatelessWidget {
   final String originalTitle;
   final int votes;
   final String movieHeroId;
+  final int id;
+  final bool isFavorite;
   const _PosterAndTitle(
       {Key? key,
       required this.title,
       required this.image,
       required this.votes,
       required this.originalTitle,
-      required this.movieHeroId})
+      required this.movieHeroId,
+      required this.id,
+      required this.isFavorite})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final moviesProvider = Provider.of<MoviesProvider>(context);
     final TextTheme textTheme = Theme.of(context).textTheme;
     final size = MediaQuery.of(context).size;
     return Container(
-      margin: const EdgeInsets.only(top: 20),
       padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: Row(children: [
-        Hero(
-          tag: movieHeroId,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: FadeInImage(
-              placeholder: const AssetImage("assets/no-image.jpg"),
-              image: NetworkImage(image),
-              height: 150,
+      child: Column(
+        children: [
+          Row(children: [
+            Hero(
+              tag: movieHeroId,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: FadeInImage(
+                  placeholder: const AssetImage("assets/no-image.jpg"),
+                  image: NetworkImage(image),
+                  height: 150,
+                ),
+              ),
             ),
-          ),
-        ),
-        const SizedBox(
-          width: 20,
-        ),
-        ConstrainedBox(
-          constraints: BoxConstraints(maxWidth: size.width - 170),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                title,
-                style: textTheme.headline5,
-                overflow: TextOverflow.ellipsis,
-                maxLines: 2,
-              ),
-              Text(
-                originalTitle,
-                style: textTheme.subtitle1,
-                overflow: TextOverflow.ellipsis,
-                maxLines: 2,
-              ),
-              Row(
+            ConstrainedBox(
+              constraints: BoxConstraints(maxWidth: size.width - 170),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Icon(
-                    Icons.star_border_outlined,
-                    size: 20,
-                    color: Colors.grey,
+                  Text(
+                    title,
+                    style: textTheme.headline5,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
                   ),
                   Text(
-                    "$votes",
-                    style: textTheme.caption,
-                  )
+                    originalTitle,
+                    style: textTheme.subtitle1,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
+                  ),
+                  Row(
+                    children: [
+                      IconButton(
+                          onPressed: () async {
+                            if (isFavorite == false) {
+                              await moviesProvider
+                                  .newFavoriteMovie(id)
+                                  .then((value) {
+                                final snackBar = SnackBar(
+                                    content: Text(
+                                        'La pelicula $title se agrego a favoritos'));
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(snackBar);
+                                Navigator.pop(context);
+                              });
+                            } else {
+                              await moviesProvider
+                                  .removeFavoriteMovie(id)
+                                  .then((value) {
+                                final snackBar = SnackBar(
+                                    content: Text(
+                                        'La pelicula $title se elimino de favoritos'));
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(snackBar);
+                                Navigator.pop(context);
+                              });
+                            }
+                          },
+                          icon: isFavorite == true
+                              ? const Icon(
+                                  Icons.favorite,
+                                  size: 30,
+                                  color: Colors.red,
+                                )
+                              : const Icon(
+                                  Icons.favorite_border_outlined,
+                                  size: 30,
+                                )),
+                      const Text(
+                        "Add favorite",
+                        style: TextStyle(fontSize: 15),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      const Icon(Icons.star, color: Colors.amber, size: 30),
+                      Text(
+                        "Votes $votes",
+                        style: const TextStyle(fontSize: 15),
+                      ),
+                    ],
+                  ),
                 ],
-              )
-            ],
-          ),
-        )
-      ]),
+              ),
+            ),
+          ])
+        ],
+      ),
     );
   }
 }

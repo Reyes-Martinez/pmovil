@@ -1,3 +1,5 @@
+export 'package:practica2/screens/movie_home.dart';
+export 'package:practica2/models/favorite_movie.dart';
 export 'package:practica2/screens/dashboard_screen.dart';
 export 'package:practica2/screens/details_screen.dart';
 export 'package:practica2/screens/list_task.dart';
