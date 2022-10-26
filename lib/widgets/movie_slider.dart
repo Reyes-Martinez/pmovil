@@ -108,6 +108,10 @@ class _MoviePoster extends StatelessWidget {
                   SizedBox(
                     height: 60,
                     child: Material(
+                      borderRadius: const BorderRadius.only(
+                        bottomRight: Radius.circular(20),
+                        bottomLeft: Radius.circular(20),
+                      ),
                       color: Colors.black.withOpacity(.5),
                       child: ListTile(
                         onTap: () => Navigator.pushNamed(context, '/details',

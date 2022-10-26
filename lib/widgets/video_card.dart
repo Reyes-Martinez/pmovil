@@ -17,7 +17,7 @@ class VideoCard extends StatelessWidget {
         if (!snapshot.hasData) {
           return Container(
             width: double.infinity,
-            height: 200,
+            height: 280,
             child: const Center(
               child: CircularProgressIndicator(),
             ),
@@ -25,7 +25,6 @@ class VideoCard extends StatelessWidget {
         }
         final cast = snapshot.data!;
         return Container(
-          margin: const EdgeInsets.only(bottom: 30),
           width: double.infinity,
           height: 180,
           child: ListView.builder(
@@ -58,6 +57,7 @@ class _CastCard extends StatelessWidget {
       ),
       showVideoProgressIndicator: true,
       progressIndicatorColor: Colors.red,
+      aspectRatio: 16 / 9,
     );
   }
 }

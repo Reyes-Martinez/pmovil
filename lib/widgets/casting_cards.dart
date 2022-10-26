@@ -17,21 +17,28 @@ class CastingCard extends StatelessWidget {
         if (!snapshot.hasData) {
           return Container(
             width: double.infinity,
-            height: 180,
+            height: 120,
             child: const Center(
               child: CircularProgressIndicator(),
             ),
           );
         }
         final cast = snapshot.data!;
-        return Container(
-          margin: const EdgeInsets.only(bottom: 30),
-          width: double.infinity,
-          height: 180,
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount: 10,
-            itemBuilder: (_, index) => _CastCard(actor: cast[index]),
+        return Material(
+          borderRadius: const BorderRadius.only(
+            bottomRight: Radius.circular(20),
+            bottomLeft: Radius.circular(20),
+          ),
+          color: Colors.black.withOpacity(.5),
+          child: Container(
+            margin: const EdgeInsets.only(bottom: 30),
+            width: double.infinity,
+            height: 110,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: 10,
+              itemBuilder: (_, index) => _CastCard(actor: cast[index]),
+            ),
           ),
         );
       },
@@ -47,7 +54,7 @@ class _CastCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 10),
-      width: 110,
+      width: 105,
       height: 100,
       child: Column(
         children: [
@@ -56,8 +63,8 @@ class _CastCard extends StatelessWidget {
               child: FadeInImage(
                 placeholder: const AssetImage("assets/no-image.jpg"),
                 image: NetworkImage(actor.fullProfilePath),
-                height: 100,
-                width: 100,
+                height: 80,
+                width: 80,
                 fit: BoxFit.cover,
               )),
           const SizedBox(
@@ -65,7 +72,8 @@ class _CastCard extends StatelessWidget {
           ),
           Text(
             actor.name,
-            maxLines: 2,
+            maxLines: 1,
+            style: const TextStyle(color: Colors.white),
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.center,
           )
